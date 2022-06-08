@@ -1268,7 +1268,7 @@ func (p *BPFProg) AttachXDP(devName string) (*BPFLink, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to attach program to device %s: %w", devName, err)
 	}
-	link := C.bpf_program__attach_xdp(p.prog, a.Index)
+	link := C.bpf_program__attach_xdp(p.prog, C.int(a.Index))
 	if C.IS_ERR_OR_NULL(unsafe.Pointer(link)) {
 		return nil, errptrError(unsafe.Pointer(link), "failed to attach xdp on device %s to program %s", devName, p.name)
 	}
